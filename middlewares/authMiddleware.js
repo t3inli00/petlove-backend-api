@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // Define jwtMiddleware as a function that returns another function
 const AuthMiddleware = ((req, res, next) => {
   // Get secret key
-    const secretKey = process.env.ACCESS_TOKEN_PRIVATE_KEY || "teampetlove.com";
+    const secretKey = process.env.ACCESS_TOKEN_PRIVATE_KEY || "petloveoamk5@gmail.com";
 
     // Get the bearer token from the request headers
     const authHeader = req.headers.authorization || "";
@@ -19,6 +19,12 @@ const AuthMiddleware = ((req, res, next) => {
       // Verify token using the provided secret key
       const decodedToken = jwt.verify(accessToken, secretKey);
 
+      //assign userId to env variable to access from other modules
+      process.env.USER_ID = decodedToken.userId;
+      process.env.USER_EMAIL = decodedToken.userEmail;
+      process.env.USER_NAME = decodedToken.userName;
+      process.env.USER_PHONE = decodedToken.phoneNumber;
+    
       if (decodedToken.exp && Date.now() >= decodedToken.exp * 1000) {
         return res.status(401).json({ error: 'Unauthorized access. Token has expired.' });
       }
@@ -31,4 +37,21 @@ const AuthMiddleware = ((req, res, next) => {
     }
   });
 
-module.exports = { AuthMiddleware };
+
+  const getUserId = (() => {
+    return process.env.USER_ID    
+  })
+
+  const getUserEmail = (() => {
+    return process.env.USER_EMAIL    
+  })
+
+  const getUserName = (() => {
+    return process.env.USER_NAME    
+  })
+
+  const getUserPhone = (() => {
+    return process.env.USER_PHONE    
+  })
+
+  module.exports = { AuthMiddleware, getUserId, getUserEmail, getUserName, getUserPhone };

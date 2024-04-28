@@ -1,0 +1,105 @@
+tags:
+  - name: Pet History
+    description: "History maintenance endpoints"
+paths:
+  /history/{id}:
+    get:
+      summary: Retrieve target user's history
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet History
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: User Id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publishing_date:
+                    type: date
+                    description: Date the pet published
+                  adopted_on:
+                    type: date
+                    description: Date the pet adopted
+                  first_name:
+                    type: string
+                    description: Adopter's first name
+                  last_name:
+                    type: string
+                    description: Adopter's last name
+                  adoption_remarks :
+                    type: string
+                    description: Adoption remarks
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error 
+
+  /history:
+    get:
+      summary: Retrieve target user's history in the indicated range
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet History
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: User Id
+          schema:
+            type: number
+        - in: query
+          name: start
+          required: true
+          description: Start Date
+          schema:
+            type: string
+        - in: query
+          name: end
+          required: true
+          description: End Date
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  publishing_date:
+                    type: date
+                    description: Date the pet published
+                  adopted_on:
+                    type: date
+                    description: Date the pet adopted
+                  first_name:
+                    type: string
+                    description: Adopter's first name
+                  last_name:
+                    type: string
+                    description: Adopter's last name
+                  adoption_remarks :
+                    type: string
+                    description: Adoption remarks
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error   

@@ -1,0 +1,203 @@
+tags:
+  - name: Pet Category
+    description: "Pet category maintenance endpoints"
+paths:
+  /pet-category:
+    post:
+      summary: Create pet category record in the pet_category table
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet Category
+      requestBody:
+        required: true
+        description: Payload to create Pet Category
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                petCategoryId:
+                  type: number
+                  description: Auto-generated Pet category Id
+                description:
+                  type: string
+                  default: ""
+                  description: Pet category description
+              required:
+                - description
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_pet_category:
+                    type: number
+                    description: Pet category ID (Auto generated)
+                  description:
+                    type: string
+                    description: Pet category description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+
+    get:
+      summary: Retrieve all pet categories from the pet_category table
+      description: Requires a bearer token for authentication.
+      security:
+        - Bearer: []
+      tags:
+        - Pet Category
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    petCategoryId:
+                      type: number
+                      description: Auto-generated Pet category Id
+                    description:
+                      type: string
+                      description: Description of the pet category
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+
+
+  /pet-category/{id}:
+    get:
+      summary: Retrieve selected pet category from pet_category table
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet Category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet category Id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  petCategoryId:
+                    type: number
+                    description: Pet category ID (Auto generated)
+                  description:
+                    type: string
+                    description: Pet category description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+
+    patch:
+      summary: Update selected pet category in the pet_category table
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet Category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet category Id
+          schema:
+            type: number
+      requestBody:
+        required: true
+        description: Payload to update the pet category record
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                petCategoryId:
+                  type: number
+                  description: Pet category ID (Auto generated)
+                description:
+                  type: string
+                  default: ""
+                  description: Pet category description
+              required:
+                - description
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  petCategoryId:
+                    type: number
+                    description: Pet category ID (Auto generated)
+                  description:
+                    type: string
+                    description: Pet category description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+
+    delete:
+      summary: Delete selected pet category from pet_category table
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet Category
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet category Id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  petCategoryId:
+                    type: number
+                    description: Pet category ID (Auto generated)
+                  description:
+                    type: string
+                    description: Pet category description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  

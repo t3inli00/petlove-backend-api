@@ -1,0 +1,182 @@
+tags:
+  - name: Request
+    description: "Request maintenance endpoints"
+paths:
+  /request/{id}:
+    get:
+      summary: Retrieve pet details for request page
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Request
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet Id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  breed:
+                    type: string
+                    description: Breed of the pet
+                  ageYear:
+                    type: string
+                    description: Age of the pet
+                  colour:
+                    type: string
+                    description: Colour of the pet
+                  weight:
+                    type: string
+                    description: Weight of the pet
+                  description:
+                    type: string
+                    description: Description about the pet
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error 
+
+  /accept-request/{id}:
+    post :
+      summary: Approve pet adaption request
+      description: Bearer token not required
+      security:
+        - Bearer: []
+      tags:
+        - Request
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet Id
+          schema:
+            type: number
+        - in: query
+          name: key
+          schema:
+            type: string
+            description: Unique request key             
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Update status
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error 
+
+  /reject-request/{id}:
+    post :
+      summary: Reject adaptation request
+      description: Bearer token not required
+      security:
+        - Bearer: []
+      tags:
+        - Request
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet Id
+          schema:
+            type: number
+        - in: query
+          name: key
+          schema:
+            type: string
+            description: Unique request key             
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Update status
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error 
+
+  /request:
+    post:
+      summary: Send request email to the owner
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Request
+      requestBody:
+        required: true
+        description: Payload to send email to the owner
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                petId:
+                  type: number
+                  description: pet Id
+                breed:
+                  type: string
+                  description: Pet's breed
+                age:
+                  type: string
+                  description: Pet's age
+                colour:
+                  type: string
+                  description: Pet's Colour
+                weight:
+                  type: string
+                  description: Pet's weight
+                description: 
+                  type: string
+                  description: description
+                message:
+                  type: string
+                  description: Request message to the owner
+              required:
+                - message
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_pet:
+                    type: number
+                    description: Pet ID
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+

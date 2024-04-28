@@ -1,0 +1,146 @@
+tags:
+  - name: Pet
+    description: "Pet image maintenance endpoints"
+paths:
+  /pet-search-by-category/{id}:
+    get:
+      summary: Retrieve selected pets fro a selected pet category
+      description:  No bearer token required.
+      tags:
+        - Pet
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet category Id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  petId:
+                    type: number
+                    description: Pet Id (Auto generated)
+                  breed:
+                    type: string
+                    description: Pet breed
+                  age:
+                    type: string
+                    description: Pet age
+                  petImageId:
+                    type: string
+                    description: Pet image Id
+                  petImagePath:
+                    type: string
+                    description: Pet image path
+                  description:
+                    type: string
+                    description: Pet image description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+
+    patch:
+      summary: Update selected pet image in the pet_image table
+      description: Requires bearer token for authentication
+      security:
+        - Bearer: []
+      tags:
+        - Pet
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet image Id
+          schema:
+            type: number
+      requestBody:
+        required: true
+        description: Payload to update the pet image record
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                likes:
+                  type: string
+                  default: ""
+                  description: Pet image description
+              required:
+                - description
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_pet_image:
+                    type: number
+                    description: Pet image ID (Auto generated)
+                  description:
+                    type: string
+                    description: Pet image description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
+
+  /pet-like/{id}:
+    patch:
+      summary: Update like out to pet advert
+      description: Does not requires bearer token for authentication
+      tags:
+        - Pet
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Pet image Id
+          schema:
+            type: number
+      requestBody:
+        required: true
+        description: Payload to update the likes to pet advert 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                likes:
+                  type: number
+                  default: 1
+                  description: like of unlike
+              required:
+                - likes
+      responses:
+        '200':
+          description: Successful responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_pet_image:
+                    type: number
+                    description: Pet image ID (Auto generated)
+                  description:
+                    type: string
+                    description: Pet image description
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Server error  
